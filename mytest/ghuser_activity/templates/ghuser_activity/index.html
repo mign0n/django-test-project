@@ -16,6 +16,22 @@
   </div>
   <div>
     Username is: <b>{{ username }}</b>
+    <dl>
+      {%for proj in proj_scroll %}
+        <dt>Project name: {{ proj.name }}</dt>
+        <dt>Project URL: {{ proj.url }}</dt>
+        <dt>Stars number: {{ proj.stars }}</dt>
+        <dt>Merged user pull requests:</dt>
+        {% for pr in proj.merged_pulls %}
+          <dd>URL: {{ pr.url }}; comments number: {{ pr.comments_number }}</dd>
+        {% endfor %}
+        <dt>Unmerged user pull requests URLs:</dt>
+        {% for pr in proj.unmerged_pulls %}
+          <dd>URL: {{ pr.url }}; comments number: {{ pr.comments_number }}</dd>
+        {% endfor %}
+      {% endfor %}
+    </dl>
+
   </div>
 </body>
 </html>
