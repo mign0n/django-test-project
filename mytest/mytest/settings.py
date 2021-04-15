@@ -24,6 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 load_dotenv()
 SECRET_KEY = environ.get('SECRET_KEY')
+GITHUB_TOKEN = environ.get('GITHUB_TOKEN')
+GITHUB_LOGIN = environ.get('GITHUB_LOGIN')
+GITHUB_PASSW = environ.get('GITHUB_PASSW')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
