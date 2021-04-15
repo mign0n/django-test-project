@@ -14,22 +14,24 @@
     </form>
   </div>
   <div>
-    Username is: <b>{{ username }}</b>
-    <dl>
-      {%for proj in proj_scroll %}
-        <dt>Project name: {{ proj.name }}</dt>
-        <dt>Project URL: {{ proj.url }}</dt>
-        <dt>Stars number: {{ proj.stars }}</dt>
-        <dt>Merged user pull requests:</dt>
-        {% for pr in proj.merged_pulls %}
-          <dd>URL: {{ pr.url }}; comments number: {{ pr.comments_number }}</dd>
-        {% endfor %}
-        <dt>Unmerged user pull requests URLs:</dt>
-        {% for pr in proj.unmerged_pulls %}
-          <dd>URL: {{ pr.url }}; comments number: {{ pr.comments_number }}</dd>
-        {% endfor %}
+    <p>Username is: <b>{{ username }}</b></p>
+      {% for proj in proj_scroll %}
+        <dl>
+          <dt><h4>Project name: {{ proj.name }}</h4></dt>
+          <dt>Project URL: <a href="{{ proj.url }}">{{ proj.url }}</a></dt>
+          <dt>Stars number: {{ proj.stars }}</dt>
+          <dt>Merged user pull requests:</dt>
+          {% for pr in proj.merged_pulls %}
+          <dd><b>URL:</b><a href="{{ pr.url }}">{{ pr.url }}</a>; <b>comments number:</b> {{ pr.comments_number }}</dd>
+          {% endfor %}
+          {% if proj.unmerged_pulls %}
+            <dt>Unmerged user pull requests URLs:</dt>
+            {% for pr in proj.unmerged_pulls %}
+              <dd><b>URL:</b><a href="{{ pr.url }}">{{ pr.url }}</a>; <b>comments number:</b> {{ pr.comments_number }}</dd>
+            {% endfor %}
+          {% endif %}
+        </dl>
       {% endfor %}
-    </dl>
 
   </div>
 </body>
