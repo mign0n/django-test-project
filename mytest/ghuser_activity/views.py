@@ -4,11 +4,11 @@ from github.GithubException import RateLimitExceededException
 
 from ghuser_activity.forms import UserNameForm
 from ghuser_activity.models import GHUserProjectsInfo
-from mytest.settings import GITHUB_LOGIN, GITHUB_PASSW
+from mytest.settings import GITHUB_TOKEN
 
 
 def get_projects_scroll(username):
-    gh = Github(login_or_token=GITHUB_LOGIN, password=GITHUB_PASSW)
+    gh = Github(login_or_token=GITHUB_TOKEN)
     try:
         scroll = GHUserProjectsInfo(gh, username).make_projects_scroll()
     except RateLimitExceededException:
