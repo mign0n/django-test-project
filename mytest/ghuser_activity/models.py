@@ -1,37 +1,42 @@
 class GHUserProjectsInfo:
-    def __init__(self, ghinstance, target_username):
-        self.ghinstance = ghinstance
+    def __init__(self, gh_instance, target_username):
+        self.gh_instance = gh_instance
         self.target_username = target_username
-        self.user = self.ghinstance.get_user(self.target_username)
+        self.user = self.gh_instance.get_user(self.target_username)
         self.repos = (repo for repo in self.user.get_repos())
 
-    def get_all_pulls_from(self, repo):
+    @staticmethod
+    def get_all_pulls_from(repo):
         return repo.get_pulls(state='all')
 
-    def get_pulls_urls(self, pulls):
-        mpulls = dict()
-        umpulls = dict()
+    @staticmethod
+    def get_pulls_urls(pulls):
+        merged_pulls = dict()
+        unmerged_pulls = dict()
         for pull in pulls:
             if pull.merged:
-                mpulls[pull.number] = pull.html_url
+                merged_pulls[pull.number] = pull.html_url
             else:
-                umpulls[pull.number] = pull.html_url
-        return mpulls, umpulls
+                unmerged_pulls[pull.number] = pull.html_url
+        return merged_pulls, unmerged_pulls
 
-    def get_comments_number_of(self, pulls):
+    @staticmethod
+    def get_comments_number_of(pulls):
         return {
             pull.number: len(
                 [comment.id for comment in pull.get_comments()]
             ) for pull in pulls
         }
 
-    def make_pulls_urls_comments(self, pulls_num_url, pulls_num_comments):
+    @staticmethod
+    def make_pulls_urls_comments(pulls_num_url, pulls_num_comments):
         return {
             pulls_num_url.get(number): pulls_num_comments.get(number)
             for number in pulls_num_url.keys()
         }
 
-    def change_data_format(self, data_dict):
+    @staticmethod
+    def change_data_format(data_dict):
         return [
             {'url': url, 'comments_number': num} for url, num in data_dict.items()
         ]
